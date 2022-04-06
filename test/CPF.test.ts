@@ -23,3 +23,6 @@ test("should try to validate an cpf if digits that less than minimum number of c
 });
 
 
+test("should try to validate null value", () => {
+	expect(() => new CPF(null as any)).toThrowError(new Error("Invalid CPF"));
+});
