@@ -5,3 +5,8 @@ test("should create an empty order with valid CPF", () => {
   const total = order.getTotal()
   expect(total).toBe(0);
 });
+
+test("should not create an order if invalid CPF", () => {
+  const cpf = "111.111.111-11";
+  expect(() => new Order(cpf)).toThrowError("Invalid CPF");
+});
