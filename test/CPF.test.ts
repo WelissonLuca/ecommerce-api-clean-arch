@@ -14,3 +14,8 @@ test("should try to validate an cpf if all digits the same", () => {
 	expect(cpf).toBeFalsy();
 });
 
+test("should try to validate an cpf if digits that exceeds the maximum number of characters", () => {
+	const cpf = new CPF("222.321.111-222222");
+	expect(cpf).toBeFalsy();
+});
+
