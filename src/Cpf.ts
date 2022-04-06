@@ -9,7 +9,7 @@ export class CPF {
     this.value = value;
 	}
 
-	validate(rawCpf: string) {
+	private validate(rawCpf: string) {
 		if (!rawCpf) return false;
 		const cpf = this.cleanCpf(rawCpf);
 		if (cpf.length !== CPF_VALID_LENGTH) return false;
