@@ -17,7 +17,7 @@ export class Order {
 	getTotal(): number {
 		let total = 0;
 		for (const orderItem of this.orderItems) {
-			total += orderItem.price * orderItem.quantity;
+			total += orderItem.getTotal();
 		}
 
 		return total;
