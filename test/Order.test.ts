@@ -33,3 +33,14 @@ test("should create order an three items with discount coupon", () => {
 	const total = order.getTotal();
 	expect(total).toBe(128);
 });
+
+test("should create order an three items with expired discount coupon", () => {
+	const cpf = "152.726.480-72";
+	const order = new Order(cpf, new Date(2020, 1, 1));
+	order.addItem(new Item(1, "Música", "CD", 30), 3);
+	order.addItem(new Item(2, "Video", "DVD", 50), 1);
+	order.addItem(new Item(3, "Vídeo", "VHS", 10), 2);
+	order.addCoupon(new Coupon("VALE20", 20, new Date(2020, 1, 1)));
+	const total = order.getTotal();
+	expect(total).toBe(128);
+});
