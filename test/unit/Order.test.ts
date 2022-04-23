@@ -1,7 +1,7 @@
-import { FixedFreightCalculator } from '../src/domain/entities/FixedFreightCalculator';
-import { Coupon } from "../src/domain/entities/Coupon";
-import { Item } from "../src/domain/entities/Item";
-import { Order } from "../src/domain/entities/Order";
+import { FixedFreightCalculator } from '../../src/domain/entities/FixedFreightCalculator';
+import { Coupon } from "../../src/domain/entities/Coupon";
+import { Item } from "../../src/domain/entities/Item";
+import { Order } from "../../src/domain/entities/Order";
 test("should create an empty order with valid CPF", () => {
 	const cpf = "152.726.480-72";
 	const order = new Order(cpf);
