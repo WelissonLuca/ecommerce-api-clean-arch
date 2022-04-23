@@ -1,4 +1,4 @@
-import { Coupon } from "./../src/Coupon";
+import { Coupon } from "../src/domain/entities/Coupon";
 
 describe("Coupon", () => {
 	it("should create a valid coupon if non-existing expire date", () => {
