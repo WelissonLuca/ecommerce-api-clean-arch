@@ -28,4 +28,11 @@ describe("Coupon", () => {
 		const isExpired = coupon.isExpired(now);
 		expect(isExpired).toBeTruthy();
 	});
+
+	it("should apply discount a valid coupon", () => {
+		const now = new Date();
+		const coupon = new Coupon("vale10", 10, new Date(now.getTime() + 1000));
+		const discount = coupon.calculateDiscount(100);
+		expect(discount).toBe(10);
+	});
 });
