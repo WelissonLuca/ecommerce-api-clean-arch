@@ -1,3 +1,4 @@
+import { FixedFreightCalculator } from './../src/FixedFreightCalculator';
 import { Coupon } from "../src/Coupon";
 import { Item } from "../src/Item";
 import { Order } from "./../src/Order";
@@ -45,7 +46,7 @@ test("should create order an three items with expired discount coupon", () => {
 	expect(total).toBe(160);
 });
 
-test("should create order an three items with calculate items freight", () => {
+test("should create order an three items with calculate items freight if strategy default", () => {
 	const cpf = "152.726.480-72";
 	const order = new Order(cpf, new Date("2021-12-11"));
 	order.addItem(
@@ -78,3 +79,38 @@ test("should create order an three items with calculate items freight", () => {
 	const freight = order.getFreigth();
 	expect(freight).toBe(260);
 });
+
+test("should create order an three items with calculate items freight if strategy fixed", () => {
+	const cpf = "152.726.480-72";
+	const order = new Order(cpf, new Date("2021-12-11"), new FixedFreightCalculator());
+	order.addItem(
+		new Item(1, "Música", "BATERIA", 1000, {
+			width: 100,
+			height: 30,
+			length: 10,
+			weight: 3,
+		}),
+		1
+	);
+	order.addItem(
+		new Item(2, "Livros", "ARQUITETURA LIMPA", 100, {
+			width: 100,
+			height: 50,
+			length: 50,
+			weight: 20,
+		}),
+		1
+	);
+	order.addItem(
+		new Item(3, "Acessórios", "XBOX", 2500, {
+			width: 10,
+			height: 10,
+			length: 10,
+			weight: 0.9,
+		}),
+		3
+	);
+	const freight = order.getFreigth();
+	expect(freight).toBe(50);
+});
+
