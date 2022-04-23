@@ -4,22 +4,23 @@ export class Item {
 		readonly description: string,
 		readonly category: string,
 		readonly price: number,
-		readonly properties: {
+		readonly properties?: {
 			width: number;
 			height: number;
 			length: number;
 			weight: number;
-		} = { width: 0, height: 0, length: 0, weight: 0 }
+		}
 	) {}
 	getVolume(): number {
-		const {
-			properties: { height, length, weight, width },
-		} = this;
+		if (!this.properties) return 0;
+		const { width, height, length } = this.properties;
 
 		return ((((width / 100) * height) / 100) * length) / 100;
 	}
 
 	getDensity(): number {
-		return this.properties.weight / this.getVolume();
+		if (!this.properties) return 0;
+		const { weight } = this.properties;
+		return weight / this.getVolume();
 	}
 }

@@ -41,6 +41,7 @@ export class Order {
 			total -= this.coupon.calculateDiscount(total, this.date);
 		}
 
+		total += this.getFreigth();	
 		return total;
 	}
 }
