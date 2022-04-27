@@ -4,5 +4,6 @@ export class PlaceOrderInput {
     readonly orderItems: { idItem: number, quantity: number }[],
     readonly date: Date,
     readonly coupon?: string
+  
   ) { }
 }

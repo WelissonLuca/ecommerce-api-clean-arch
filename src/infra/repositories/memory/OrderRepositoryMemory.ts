@@ -8,5 +8,8 @@ export class OrderRepositoryMemory implements OrderRepository {
     this.orders.push(order);
     return Promise.resolve();
   }
+  count(): Promise<number> { 
+    return Promise.resolve(this.orders.length);
+  }
 
 }

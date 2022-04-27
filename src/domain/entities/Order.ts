@@ -25,6 +25,7 @@ export class Order {
 		this.orderItems.push(new OrderItem(item.id, item.price, quantity));
 	}
 
+
 	addCoupon(coupon: Coupon) {
 		if (coupon.isExpired(this.date)) return;
 		this.coupon = coupon;
@@ -46,5 +47,9 @@ export class Order {
 
 		total += this.getFreigth();	
 		return total;
+	}
+
+	getCode(): string {
+		return this.code.value;
 	}
 }
