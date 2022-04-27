@@ -114,3 +114,41 @@ test("should create order an three items with calculate items freight if strateg
 	expect(freight).toBe(50);
 });
 
+
+test("should create order with code", () => {
+	const cpf = "152.726.480-72";
+	const order = new Order(
+		cpf,
+		new Date("2021-12-11"),
+		new FixedFreightCalculator()
+	);
+	order.addItem(
+		new Item(1, "Música", "BATERIA", 1000, {
+			width: 100,
+			height: 30,
+			length: 10,
+			weight: 3,
+		}),
+		1
+	);
+	order.addItem(
+		new Item(2, "Livros", "ARQUITETURA LIMPA", 100, {
+			width: 100,
+			height: 50,
+			length: 50,
+			weight: 20,
+		}),
+		1
+	);
+	order.addItem(
+		new Item(3, "Acessórios", "XBOX", 2500, {
+			width: 10,
+			height: 10,
+			length: 10,
+			weight: 0.9,
+		}),
+		3
+	);
+	const code = order.code
+	expect(code).toBe(202100000001);
+});

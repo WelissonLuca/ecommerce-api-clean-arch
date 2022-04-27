@@ -10,10 +10,14 @@ export class Order {
 	orderItems: OrderItem[];
 	coupon?: Coupon;
 	private freigth: number;
-	constructor(cpf: string, readonly date: Date = new Date(), readonly freightCalculator: FreightCalculator = new DefaultFreightCalculator()) {
+	code: string
+	constructor(cpf: string, readonly date: Date = new Date(), readonly freightCalculator: FreightCalculator = new DefaultFreightCalculator(), readonly sequence: number = 1) {
 		this.cpf = new CPF(cpf);
 		this.orderItems = [];
 		this.freigth = 0;
+		const year = date.getFullYear();
+
+		this.code = `${year}${sequence.toString().padStart(8, '0')}`;
 	}
 
 	addItem(item: Item, quantity: number): void {
