@@ -149,6 +149,6 @@ test("should create order with code", () => {
 		}),
 		3
 	);
-	const code = order.code
-	expect(code).toBe(202100000001);
+	const code = order.code.value
+	expect(code).toBe("202100000001");
 });
