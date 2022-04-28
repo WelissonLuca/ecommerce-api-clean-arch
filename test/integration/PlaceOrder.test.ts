@@ -3,6 +3,7 @@ import { CouponRepositoryMemory } from "../../src/infra/repositories/memory/Coup
 import { PlaceOrder } from "../../src/application/useCases/PlaceOrder";
 import { OrderRepositoryMemory } from "../../src/infra/repositories/memory/OrderRepositoryMemory";
 import { PgPromiseConnectionAdapter } from "../../src/infra/database/PgPromiseConnectionAdapter";
+import { CouponRepositoryDatabase } from "../../src/infra/repositories/database/CouponRepositoryDatabase";
 
 let placeOrder: PlaceOrder;
 describe("PlaceOrder", () => {
@@ -10,7 +11,7 @@ describe("PlaceOrder", () => {
 		const connection = new PgPromiseConnectionAdapter();
 		const itemRepository = new ItemRepositoryDatabase(connection);
 		const orderRepository = new OrderRepositoryMemory();
-		const couponRepository = new CouponRepositoryMemory();
+		const couponRepository = new CouponRepositoryDatabase(connection);
 		placeOrder = new PlaceOrder(
 			itemRepository,
 			orderRepository,
