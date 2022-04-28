@@ -1,6 +1,6 @@
 import { ItemRepositoryDatabase } from "../../src/infra/repositories/database/ItemRepositoryDatabase";
 import { CouponRepositoryMemory } from "../../src/infra/repositories/memory/CouponRepositoryMemory";
-import { PlaceOrder } from "../../src/application/useCases/PlaceOrder";
+import { PlaceOrder } from "../../src/application/useCases/place_order/PlaceOrder";
 import { OrderRepositoryMemory } from "../../src/infra/repositories/memory/OrderRepositoryMemory";
 import { PgPromiseConnectionAdapter } from "../../src/infra/database/PgPromiseConnectionAdapter";
 import { CouponRepositoryDatabase } from "../../src/infra/repositories/database/CouponRepositoryDatabase";
