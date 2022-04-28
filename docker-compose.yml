@@ -1,0 +1,12 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:alpine
+    restart: unless-stopped
+    ports:
+      - "5555:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: development
+      POSTGRES_DB: ccca
+      PGDATA: /var/lib/postgres

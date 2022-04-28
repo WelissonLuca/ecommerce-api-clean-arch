@@ -1,4 +1,4 @@
-import { DefaultFreightCalculator } from './../../domain/entities/DefaultFreightCalculator';
+import { DefaultFreightCalculator } from '../../domain/entities/DefaultFreightCalculator';
 import { CouponRepository } from "../../domain/repositories/CouponRepository";
 import { ItemRepository } from "../../domain/repositories/ItemRepository";
 import { OrderRepository } from "../../domain/repositories/OrderRepository";

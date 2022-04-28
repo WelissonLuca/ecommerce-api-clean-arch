@@ -1,6 +1,6 @@
-import { OrderCode } from './OrderCode';
-import { DefaultFreightCalculator } from './DefaultFreightCalculator';
-import { FreightCalculator } from './FreightCalculator';
+import { OrderCode } from "./OrderCode";
+import { DefaultFreightCalculator } from "./DefaultFreightCalculator";
+import { FreightCalculator } from "./FreightCalculator";
 import { Coupon } from "./Coupon";
 import { CPF } from "./Cpf";
 import { Item } from "./Item";
@@ -10,29 +10,33 @@ export class Order {
 	cpf: CPF;
 	orderItems: OrderItem[];
 	coupon?: Coupon;
-	private freigth: number;
-	code: OrderCode
-	constructor(cpf: string, readonly date: Date = new Date(), readonly freightCalculator: FreightCalculator = new DefaultFreightCalculator(), readonly sequence: number = 1) {
+	private freight: number;
+	code: OrderCode;
+	constructor(
+		cpf: string,
+		readonly date: Date = new Date(),
+		readonly freightCalculator: FreightCalculator = new DefaultFreightCalculator(),
+		readonly sequence: number = 1
+	) {
 		this.cpf = new CPF(cpf);
 		this.orderItems = [];
-		this.freigth = 0;
+		this.freight = 0;
 		this.code = new OrderCode(date, sequence);
 	}
 
 	addItem(item: Item, quantity: number): void {
-		this.freigth += this.freightCalculator.calculate(item) * quantity;
+		this.freight += Number(this.freightCalculator.calculate(item) * quantity);
 
 		this.orderItems.push(new OrderItem(item.id, item.price, quantity));
 	}
-
 
 	addCoupon(coupon: Coupon) {
 		if (coupon.isExpired(this.date)) return;
 		this.coupon = coupon;
 	}
 
-	getFreigth(): number { 
-		return this.freigth;
+	getFreight(): number {
+		return this.freight;
 	}
 
 	getTotal(): number {
@@ -45,7 +49,7 @@ export class Order {
 			total -= this.coupon.calculateDiscount(total, this.date);
 		}
 
-		total += this.getFreigth();	
+		total += this.getFreight();
 		return total;
 	}
 
