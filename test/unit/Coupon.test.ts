@@ -6,14 +6,14 @@ describe("Coupon", () => {
 		const coupon = new Coupon("vale10", 10);
 		const isValid = coupon.isValid(now);
 		expect(isValid).toBeTruthy();
-  });
-  
-  	it("should create a valid coupon", () => {
-			const now = new Date();
-			const coupon = new Coupon("vale10", 10, new Date(now.getTime() + 1000));
-			const isValid = coupon.isValid(now);
-			expect(isValid).toBeTruthy();
-		});
+	});
+
+	it("should create a valid coupon", () => {
+		const now = new Date();
+		const coupon = new Coupon("vale10", 10, new Date(now.getTime() + 1000));
+		const isValid = coupon.isValid(now);
+		expect(isValid).toBeTruthy();
+	});
 
 	it("should not create a coupon if not valid", () => {
 		const now = new Date();
