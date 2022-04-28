@@ -5,11 +5,13 @@ import { OrderRepositoryMemory } from "../../src/infra/repositories/memory/Order
 import { PgPromiseConnectionAdapter } from "../../src/infra/database/PgPromiseConnectionAdapter";
 import { CouponRepositoryDatabase } from "../../src/infra/repositories/database/CouponRepositoryDatabase";
 import { OrderRepositoryDatabase } from "../../src/infra/repositories/database/OrderRepositoryDatabase";
+import { Connection } from "../../src/infra/database/Connection";
 
 let placeOrder: PlaceOrder;
+let connection: Connection;
 describe("PlaceOrder", () => {
 	beforeEach(() => {
-		const connection = new PgPromiseConnectionAdapter();
+		connection = new PgPromiseConnectionAdapter();
 		const itemRepository = new ItemRepositoryDatabase(connection);
 		const orderRepository = new OrderRepositoryDatabase(connection);
 		const couponRepository = new CouponRepositoryDatabase(connection);
@@ -18,6 +20,11 @@ describe("PlaceOrder", () => {
 			orderRepository,
 			couponRepository
 		);
+	});
+
+	afterEach(async () => {
+		await connection.query("delete from ccca.order", []);
+		await connection.query("delete from ccca.order_item", []);
 	});
 	it("should be a place order", async () => {
 		const input = {
