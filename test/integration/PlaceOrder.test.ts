@@ -4,13 +4,14 @@ import { PlaceOrder } from "../../src/application/useCases/PlaceOrder";
 import { OrderRepositoryMemory } from "../../src/infra/repositories/memory/OrderRepositoryMemory";
 import { PgPromiseConnectionAdapter } from "../../src/infra/database/PgPromiseConnectionAdapter";
 import { CouponRepositoryDatabase } from "../../src/infra/repositories/database/CouponRepositoryDatabase";
+import { OrderRepositoryDatabase } from "../../src/infra/repositories/database/OrderRepositoryDatabase";
 
 let placeOrder: PlaceOrder;
 describe("PlaceOrder", () => {
 	beforeEach(() => {
 		const connection = new PgPromiseConnectionAdapter();
 		const itemRepository = new ItemRepositoryDatabase(connection);
-		const orderRepository = new OrderRepositoryMemory();
+		const orderRepository = new OrderRepositoryDatabase(connection);
 		const couponRepository = new CouponRepositoryDatabase(connection);
 		placeOrder = new PlaceOrder(
 			itemRepository,

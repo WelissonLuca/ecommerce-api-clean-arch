@@ -56,4 +56,12 @@ export class Order {
 	getCode(): string {
 		return this.code.value;
 	}
+
+	getCpf(): string { 
+		return this.cpf.value;
+	}
+
+	getOrderItems(): OrderItem[] { 
+		return this.orderItems;
+	}
 }
