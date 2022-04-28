@@ -5,7 +5,7 @@ import { CouponRepositoryDatabase } from "./../../src/infra/repositories/databas
 let validateCoupon: ValidateCoupon;
 describe("ValidateCoupon", () => {
 	beforeEach(async () => {
-		const connection = new PgPromiseConnectionAdapter();
+		const connection = PgPromiseConnectionAdapter.getInstance();
 		const couponRepository = new CouponRepositoryDatabase(connection);
 		validateCoupon = new ValidateCoupon(couponRepository);
 	});

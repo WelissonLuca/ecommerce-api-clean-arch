@@ -6,7 +6,7 @@ import SimulateFreigthInput from '../../src/application/useCases/simulate_freigt
 
 describe('SimulateFreigth', () => { 
   it('shoud be a simulate freigth', async () => { 
-    const connection = new PgPromiseConnectionAdapter();
+    const connection = PgPromiseConnectionAdapter.getInstance();
     const itemRepository = new ItemRepositoryDatabase(connection);
     const freightCalculator = new DefaultFreightCalculator();
     const simulateFreigth = new SimulateFreigth(
