@@ -1,19 +1,24 @@
-import { DefaultFreightCalculator } from '../../../domain/entities/DefaultFreightCalculator';
+import { OrderRepository } from "./../../../domain/repositories/OrderRepository";
+import { ItemRepository } from "./../../../domain/repositories/ItemRepository";
+import { RepositoryFactory } from "./../../../domain/factories/RepositoryFactory";
+import { DefaultFreightCalculator } from "../../../domain/entities/DefaultFreightCalculator";
 import { CouponRepository } from "../../../domain/repositories/CouponRepository";
-import { ItemRepository } from "../../../domain/repositories/ItemRepository";
-import { OrderRepository } from "../../../domain/repositories/OrderRepository";
 import { Order } from "../../../domain/entities/Order";
 import { PlaceOrderInput } from "./PlaceOrderInput";
 import { PlaceOrderOutput } from "./PlaceOrderOutput";
+
 export class PlaceOrder {
-	constructor(
-		readonly itemRepository: ItemRepository,
-		readonly orderRepository: OrderRepository,
-		readonly couponRepository: CouponRepository
-	) {}
+	itemRepository: ItemRepository;
+	couponRepository: CouponRepository;
+	orderRepository: OrderRepository;
+	constructor(readonly repositoryFactory: RepositoryFactory) {
+		this.itemRepository = repositoryFactory.createItemRepository();
+		this.couponRepository = repositoryFactory.createCouponRepository();
+		this.orderRepository = repositoryFactory.createOrderRepository();
+	}
 
 	async execute(input: PlaceOrderInput): Promise<PlaceOrderOutput> {
-		const sequence = await this.orderRepository.count() + 1;
+		const sequence = (await this.orderRepository.count()) + 1;
 		const order = new Order(
 			input.cpf,
 			input.date,
@@ -30,8 +35,8 @@ export class PlaceOrder {
 		if (input.coupon) {
 			const coupon = await this.couponRepository.findByCode(input.coupon);
 			if (coupon) order.addCoupon(coupon);
-    }
-    
+		}
+
 		await this.orderRepository.save(order);
 		const total = order.getTotal();
 		const output = new PlaceOrderOutput(total, order.getCode());

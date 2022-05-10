@@ -1,3 +1,4 @@
+import { DatabaseRepositoryFactory } from "./../../src/infra/factories/DatabaseRepositoryFactory ";
 import { ItemRepositoryDatabase } from "../../src/infra/repositories/database/ItemRepositoryDatabase";
 import { CouponRepositoryMemory } from "../../src/infra/repositories/memory/CouponRepositoryMemory";
 import { PlaceOrder } from "../../src/application/useCases/place_order/PlaceOrder";
@@ -9,17 +10,12 @@ import { Connection } from "../../src/infra/database/Connection";
 
 let placeOrder: PlaceOrder;
 let connection: Connection;
+
 describe("PlaceOrder", () => {
 	beforeEach(() => {
 		connection = PgPromiseConnectionAdapter.getInstance();
-		const itemRepository = new ItemRepositoryDatabase(connection);
-		const orderRepository = new OrderRepositoryDatabase(connection);
-		const couponRepository = new CouponRepositoryDatabase(connection);
-		placeOrder = new PlaceOrder(
-			itemRepository,
-			orderRepository,
-			couponRepository
-		);
+		const repositoryFactory = new DatabaseRepositoryFactory();
+		placeOrder = new PlaceOrder(repositoryFactory);
 	});
 
 	afterEach(async () => {
