@@ -6,7 +6,9 @@
   "dependencies": {
     "@types/jest": "^27.4.1",
     "@types/sinon": "^10.0.11",
+    "axios": "^0.27.2",
     "dotenv": "^16.0.0",
+    "express": "^4.18.1",
     "jest": "^27.5.1",
     "pg-promise": "^10.11.1",
     "sinon": "^13.0.1",
@@ -14,9 +16,12 @@
   },
   "scripts": {
     "test": "NODE_ENV=test&&jest --runInBand --forceExit --coverage",
+    "start": "ts-node ./src/main.ts",
     "coverage": "tsc && jest ./dist --coverage"
   },
   "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.33",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
     "ts-node-dev": "^1.1.8"
