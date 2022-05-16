@@ -1,10 +1,12 @@
+import { GetOrder } from "../../application/useCases/get_order/GetOrder";
 import { GetOrders } from "../../application/useCases/get_orders/GetOrders";
 import { RepositoryFactory } from "../../domain/factories/RepositoryFactory";
 
-export class GetOrdersController {
+export class GetOrderController {
 	constructor(readonly repositoryFactory: RepositoryFactory) {}
 	async execute(params: any, body: any) {
-		const getOrders = new GetOrders(this.repositoryFactory);
-		return getOrders.execute();
+		const code = params.code;
+		const getOrder = new GetOrder(this.repositoryFactory);
+		return getOrder.execute(code);
 	}
 }

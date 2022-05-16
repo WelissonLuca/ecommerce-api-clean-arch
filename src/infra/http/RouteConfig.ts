@@ -7,6 +7,7 @@ import { ItemRepositoryDatabase } from "../repositories/database/ItemRepositoryD
 import { Http } from "./http";
 import { RepositoryFactory } from "../../domain/factories/RepositoryFactory";
 import { GetOrdersController } from "../controller/GetOrdersController";
+import { GetOrderController } from "../controller/GetOrderController";
 
 export class RouteConfig {
 	constructor(http: Http, readonly repositoryFactory: RepositoryFactory) {
@@ -33,5 +34,12 @@ export class RouteConfig {
 			);
 			return getOrdersController.execute(params, body);
 		});
+
+			http.on("/orders/:code", "get", async (params: any, body: any) => {
+				const getOrderController = new GetOrderController(
+					this.repositoryFactory
+				);
+				return getOrderController.execute(params, body);
+			});
 	}
 }
