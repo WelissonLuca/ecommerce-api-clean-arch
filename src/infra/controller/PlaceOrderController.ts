@@ -1,6 +1,5 @@
 import { RepositoryFactory } from './../../domain/factories/RepositoryFactory';
 import { PlaceOrder } from "../../application/useCases/place_order/PlaceOrder";
-import { DatabaseRepositoryFactory } from "../factories/DatabaseRepositoryFactory ";
 
 export class PlaceOrderController  { 
   constructor(readonly repositoryFactory: RepositoryFactory) {}

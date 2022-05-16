@@ -6,7 +6,8 @@ import { Connection } from "../../database/Connection";
 import { OrderRepository } from "./../../../domain/repositories/OrderRepository";
 
 export class OrderRepositoryDatabase implements OrderRepository {
-	constructor(readonly connection: Connection) {}
+	constructor(readonly connection: Connection) { }
+	
 	async get(code: string): Promise<Order> {
 		const [orderData] = await this.connection.query(
 			"select * from ccca.order where code = $1",
@@ -60,6 +61,18 @@ export class OrderRepositoryDatabase implements OrderRepository {
 	
 		
 		return order;
+	}
+	async findAll(): Promise<Order[]> {
+		const orders: Order[] = [];
+		const ordersData = await this.connection.query(
+			"select * from ccca.order",
+			[]
+		)
+		for (const orderData of ordersData) {
+			const order = await this.get(orderData.code);
+			orders.push(order);
+		}
+		return orders;
 	}
 	async save(order: Order): Promise<void> {
 		const [orderData] = await this.connection.query(

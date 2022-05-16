@@ -1,25 +1,26 @@
-import { DatabaseRepositoryFactory } from "./../../src/infra/factories/DatabaseRepositoryFactory ";
+import { DatabaseRepositoryFactory } from "../../src/infra/factories/DatabaseRepositoryFactory ";
 import { PlaceOrder } from "../../src/application/useCases/place_order/PlaceOrder";
 import { PgPromiseConnectionAdapter } from "../../src/infra/database/PgPromiseConnectionAdapter";
 import { Connection } from "../../src/infra/database/Connection";
-import { GetOrder } from "../../src/application/useCases/get_order/GetOrder";
+import { GetOrders } from "../../src/application/useCases/get_orders/GetOrders";
 
 let placeOrder: PlaceOrder;
-let getOrder: GetOrder;
+let getOrders: GetOrders;
 let connection: Connection;
 
-describe("GetOrder", () => {
+describe("GetOrders", () => {
 	beforeEach(() => {
 		connection = PgPromiseConnectionAdapter.getInstance();
 		const repositoryFactory = new DatabaseRepositoryFactory();
 		placeOrder = new PlaceOrder(repositoryFactory);
-		getOrder = new GetOrder(repositoryFactory);
+		getOrders = new GetOrders(repositoryFactory);
 	});
 
 	afterEach(async () => {
 		await connection.query("delete from ccca.order", []);
 		await connection.query("delete from ccca.order_item", []);
 	});
+
 	it("should be get place order by code", async () => {
 		const input = {
 			cpf: "606.915.690-02",
@@ -32,9 +33,8 @@ describe("GetOrder", () => {
 			coupon: "VALE20",
 		};
 
-		const placeOrderOutput = await placeOrder.execute(input);
-		const getOrderOutput = await getOrder.execute(placeOrderOutput.code);
-		expect(getOrderOutput.code).toBe(placeOrderOutput.code);
-		expect(getOrderOutput.total).toBe(138);
+		await placeOrder.execute(input);
+		const getOrdersOutput = await getOrders.execute();
+		expect(getOrdersOutput.orders).toHaveLength(1);
 	});
 });
