@@ -62,7 +62,6 @@ export class OrderRepositoryDatabase implements OrderRepository {
 		return order;
 	}
 	async save(order: Order): Promise<void> {
-		console.log(order.coupon);
 		const [orderData] = await this.connection.query(
 			"insert into ccca.order (code, cpf, issue_date, freight, sequence, coupon) values ($1, $2, $3, $4, $5, $6) returning *",
 			[
