@@ -10,6 +10,6 @@ export class CouponRepositoryDatabase implements CouponRepository {
 
     if (!couponData) return;
 
-    return new Coupon(couponData.name, couponData.percentage, couponData.expire_date);
+    return new Coupon(couponData.code, couponData.percentage, couponData.expire_date);
   }
 }
