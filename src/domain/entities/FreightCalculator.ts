@@ -1,4 +1,5 @@
-import { Item } from './Item';
+import { Item } from "./Item";
+
 export interface FreightCalculator {
-  calculate(item: Item): number 
+  calculate(item: Item): number;
 }

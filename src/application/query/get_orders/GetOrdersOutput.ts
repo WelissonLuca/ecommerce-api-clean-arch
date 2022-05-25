@@ -1,10 +1,11 @@
 export class GetOrdersOutput {
-	orders: { code: string; total: number }[];
-	constructor() {
-		this.orders = [];
-	}
+  orders: { code: string; total: number }[];
 
-	addOrder(code: string, total: number) {
-		this.orders.push({ code, total });
-	}
+  constructor() {
+    this.orders = [];
+  }
+
+  addOrder(code: string, total: number) {
+    this.orders.push({ code, total });
+  }
 }

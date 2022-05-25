@@ -1,67 +1,72 @@
-import { OrderCode } from "./OrderCode";
-import { DefaultFreightCalculator } from "./DefaultFreightCalculator";
-import { FreightCalculator } from "./FreightCalculator";
 import { Coupon } from "./Coupon";
 import { CPF } from "./Cpf";
+import { DefaultFreightCalculator } from "./DefaultFreightCalculator";
+import { FreightCalculator } from "./FreightCalculator";
 import { Item } from "./Item";
+import { OrderCode } from "./OrderCode";
 import { OrderItem } from "./OrderItem";
 
 export class Order {
-	cpf: CPF;
-	orderItems: OrderItem[];
-	coupon?: Coupon;
-	private freight: number;
-	code: OrderCode;
-	constructor(
-		cpf: string,
-		readonly date: Date = new Date(),
-		readonly freightCalculator: FreightCalculator = new DefaultFreightCalculator(),
-		readonly sequence: number = 1
-	) {
-		this.cpf = new CPF(cpf);
-		this.orderItems = [];
-		this.freight = 0;
-		this.code = new OrderCode(date, sequence);
-	}
+  cpf: CPF;
 
-	addItem(item: Item, quantity: number): void {
-		this.freight += Number(this.freightCalculator.calculate(item) * quantity);
+  orderItems: OrderItem[];
 
-		this.orderItems.push(new OrderItem(item.id, item.price, quantity));
-	}
+  coupon?: Coupon;
 
-	addCoupon(coupon: Coupon) {
-		if (coupon.isExpired(this.date)) return;
-		this.coupon = coupon;
-	}
+  private freight: number;
 
-	getFreight(): number {
-		return this.freight;
-	}
+  code: OrderCode;
 
-	getTotal(): number {
-		let total = 0;
-		for (const orderItem of this.orderItems) {
-			total += orderItem.getTotal();
-		}
+  constructor(
+    cpf: string,
+    readonly date: Date = new Date(),
+    readonly freightCalculator: FreightCalculator = new DefaultFreightCalculator(),
+    readonly sequence: number = 1
+  ) {
+    this.cpf = new CPF(cpf);
+    this.orderItems = [];
+    this.freight = 0;
+    this.code = new OrderCode(date, sequence);
+  }
 
-		if (this.coupon) {
-			total -= this.coupon.calculateDiscount(total, this.date);
-		}
+  addItem(item: Item, quantity: number): void {
+    this.freight += Number(this.freightCalculator.calculate(item) * quantity);
 
-		total += this.getFreight();
-		return total;
-	}
+    this.orderItems.push(new OrderItem(item.id, item.price, quantity));
+  }
 
-	getCode(): string {
-		return this.code.value;
-	}
+  addCoupon(coupon: Coupon) {
+    if (coupon.isExpired(this.date)) return;
+    this.coupon = coupon;
+  }
 
-	getCpf(): string { 
-		return this.cpf.value;
-	}
+  getFreight(): number {
+    return this.freight;
+  }
 
-	getOrderItems(): OrderItem[] { 
-		return this.orderItems;
-	}
+  getTotal(): number {
+    let total = 0;
+    for (const orderItem of this.orderItems) {
+      total += orderItem.getTotal();
+    }
+
+    if (this.coupon) {
+      total -= this.coupon.calculateDiscount(total, this.date);
+    }
+
+    total += this.getFreight();
+    return total;
+  }
+
+  getCode(): string {
+    return this.code.value;
+  }
+
+  getCpf(): string {
+    return this.cpf.value;
+  }
+
+  getOrderItems(): OrderItem[] {
+    return this.orderItems;
+  }
 }

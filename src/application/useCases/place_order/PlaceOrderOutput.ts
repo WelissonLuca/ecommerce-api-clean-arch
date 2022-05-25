@@ -1,6 +1,3 @@
 export class PlaceOrderOutput {
-  constructor(
-    readonly total: number,
-    readonly code: string
-  ) { }
+  constructor(readonly total: number, readonly code: string) {}
 }
