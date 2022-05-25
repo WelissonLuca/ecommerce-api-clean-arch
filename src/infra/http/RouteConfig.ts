@@ -34,7 +34,7 @@ export class RouteConfig {
 
 		http.on("/orders", "get", async (params: any, body: any) => {
 			const getOrdersController = new GetOrdersController(
-				this.repositoryFactory
+				this.connection
 			);
 			return getOrdersController.execute(params, body);
 		});
