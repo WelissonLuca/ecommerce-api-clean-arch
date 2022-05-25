@@ -1,12 +1,11 @@
-import { GetOrder } from "../../application/useCases/get_order/GetOrder";
-import { GetOrders } from "../../application/useCases/get_orders/GetOrders";
-import { RepositoryFactory } from "../../domain/factories/RepositoryFactory";
+import { GetOrder } from "../../application/query/get_order/GetOrder";
+import { Connection } from "../database/Connection";
 
 export class GetOrderController {
-	constructor(readonly repositoryFactory: RepositoryFactory) {}
+	constructor(readonly connection: Connection) {}
 	async execute(params: any, body: any) {
 		const code = params.code;
-		const getOrder = new GetOrder(this.repositoryFactory);
+		const getOrder = new GetOrder(this.connection);
 		return getOrder.execute(code);
 	}
 }
