@@ -1,13 +1,13 @@
-import { Connection } from '../../../infra/database/Connection';
-import { GetOrderOutput } from './GetOrderOutput';
+import { OrderDao } from "./../../dao/OrderDao";
+import { Connection } from "../../../infra/database/Connection";
+import { GetOrderOutput } from "./GetOrderOutput";
+
 export class GetOrder {
-  constructor(readonly connection: Connection) {
+	constructor(readonly orderDao: OrderDao) {}
 
-  }
-
-  async execute(code: string): Promise<GetOrderOutput> { 
-    const [ordarData] = await this.connection.query("select code, total::float from ccca.order where code = $1", [code]);
-    const getOrderOutput = new GetOrderOutput(ordarData.code, ordarData.total);
-    return getOrderOutput;
-  }
+	async execute(code: string): Promise<GetOrderOutput> {
+		const orderData = await this.orderDao.get(code);
+		const getOrderOutput = new GetOrderOutput(orderData.code, orderData.total);
+		return getOrderOutput;
+	}
 }

@@ -1,3 +1,4 @@
+import { OrderDao } from './../../application/dao/OrderDao';
 import { PlaceOrderController } from "./../controller/PlaceOrderController";
 import { SimulateFreigth } from "../../application/useCases/simulate_freigth/SimulateFreigth";
 import { DefaultFreightCalculator } from "../../domain/entities/DefaultFreightCalculator";
@@ -13,7 +14,7 @@ export class RouteConfig {
 	constructor(
 		http: Http,
 		readonly repositoryFactory: RepositoryFactory,
-		readonly connection: Connection
+		readonly orderDao: OrderDao
 	) {
 		http.on("/orders", "post", async (params: any, body: any) => {
 			const placeOrderController = new PlaceOrderController(
@@ -33,14 +34,12 @@ export class RouteConfig {
 		});
 
 		http.on("/orders", "get", async (params: any, body: any) => {
-			const getOrdersController = new GetOrdersController(
-				this.connection
-			);
+			const getOrdersController = new GetOrdersController(this.orderDao);
 			return getOrdersController.execute(params, body);
 		});
 
 		http.on("/orders/:code", "get", async (params: any, body: any) => {
-			const getOrderController = new GetOrderController(connection);
+			const getOrderController = new GetOrderController(this.orderDao);
 			return getOrderController.execute(params, body);
 		});
 	}

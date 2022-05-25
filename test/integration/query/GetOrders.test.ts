@@ -3,17 +3,21 @@ import { PlaceOrder } from "../../../src/application/useCases/place_order/PlaceO
 import { PgPromiseConnectionAdapter } from "../../../src/infra/database/PgPromiseConnectionAdapter";
 import { Connection } from "../../../src/infra/database/Connection";
 import { GetOrders } from "../../../src/application/query/get_orders/GetOrders";
+import { OrderDao } from "../../../src/application/dao/OrderDao";
+import { OrderDaoDatabase } from "../../../src/infra/dao/OrderDaoDatabase";
 
 let placeOrder: PlaceOrder;
 let getOrders: GetOrders;
 let connection: Connection;
+let orderDao: OrderDao;
 
 describe("GetOrders", () => {
 	beforeEach(() => {
 		connection = PgPromiseConnectionAdapter.getInstance();
 		const repositoryFactory = new DatabaseRepositoryFactory();
 		placeOrder = new PlaceOrder(repositoryFactory);
-		getOrders = new GetOrders(connection);
+		orderDao = new OrderDaoDatabase(connection);
+		getOrders = new GetOrders(orderDao);
 	});
 
 	afterEach(async () => {

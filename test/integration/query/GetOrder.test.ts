@@ -1,3 +1,5 @@
+import { OrderDaoDatabase } from './../../../src/infra/dao/OrderDaoDatabase';
+import { OrderDao } from './../../../src/application/dao/OrderDao';
 import { DatabaseRepositoryFactory } from "./../../../src/infra/factories/DatabaseRepositoryFactory ";
 import { PlaceOrder } from "../../../src/application/useCases/place_order/PlaceOrder";
 import { PgPromiseConnectionAdapter } from "../../../src/infra/database/PgPromiseConnectionAdapter";
@@ -7,13 +9,15 @@ import { GetOrder } from "../../../src/application/query/get_order/GetOrder";
 let placeOrder: PlaceOrder;
 let getOrder: GetOrder;
 let connection: Connection;
+let orderDao: OrderDao;
 
 describe("GetOrder", () => {
 	beforeEach(() => {
 		connection = PgPromiseConnectionAdapter.getInstance();
 		const repositoryFactory = new DatabaseRepositoryFactory();
 		placeOrder = new PlaceOrder(repositoryFactory);
-		getOrder = new GetOrder(connection);
+		orderDao = new OrderDaoDatabase(connection);
+		getOrder = new GetOrder(orderDao);
 	});
 
 	afterEach(async () => {
